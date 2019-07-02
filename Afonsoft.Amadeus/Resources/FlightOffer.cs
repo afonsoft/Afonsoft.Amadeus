@@ -8,9 +8,9 @@ namespace Afonsoft.Amadeus.Resources
     /// <seealso cref= com.amadeus.shopping.FlightOffers#get() </seealso>
     public class FlightOffer : Resource
     {
-        private string type;
-        private string id;
-        private OfferItem[] offerItems;
+        public string type;
+        public string id;
+        public OfferItem[] offerItems;
 
         /// <summary>
         /// An FlightOffer-related object as returned by the FlightOffers API. </summary>

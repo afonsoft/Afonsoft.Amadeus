@@ -2,6 +2,21 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>2.1.0</Version>
+    <PackageProjectUrl>https://github.com/afonsoft/Afonsoft.Amadeus</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/afonsoft/Afonsoft.Amadeus</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>AFONSOFT</Copyright>
+    <Authors>Afonso Dutra Nogueira Filho</Authors>
+    <Company>Afonsoft</Company>
+    <PackageTags>amadeus travel flights hotels sdk library api self-service travel-insight ai travel-content csharp-library afonsoft</PackageTags>
+    <PackageReleaseNotes>Amadeus CSharp SDK - C# library for the Amadeus Self-Service travel APIs
+Amadeus provides a set of APIs for the travel industry. Flights, Hotels, Locations and more.</PackageReleaseNotes>
+    <Description>Amadeus CSharp SDK - C# library for the Amadeus Self-Service travel APIs
+Amadeus provides a set of APIs for the travel industry. Flights, Hotels, Locations and more.</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

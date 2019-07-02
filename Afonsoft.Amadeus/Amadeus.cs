@@ -25,7 +25,7 @@ namespace Afonsoft.Amadeus
         /// <summary>
         /// The API version.
         /// </summary>
-        public const string VERSION = "3.1.0";
+        public const string VERSION = "2.1.0";
 
         /// <summary>
         /// <para>
