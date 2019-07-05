@@ -25,7 +25,7 @@
         ///   <code>/v2/travel/analytics</code> endpoints.
         /// </para>
         /// </summary>
-        public Afonsoft.Amadeus.travel.analytics.Analytics analytics;
+        public Afonsoft.Amadeus.travel.analytics.Analytics Analytics { get; private set; }
 
         /// <summary>
         /// Constructor.
@@ -33,7 +33,7 @@
         /// </summary>
         public Travel(Amadeus client)
         {
-            this.analytics = new Afonsoft.Amadeus.travel.analytics.Analytics(client);
+            this.Analytics = new Afonsoft.Amadeus.travel.analytics.Analytics(client);
         }
     }
 }

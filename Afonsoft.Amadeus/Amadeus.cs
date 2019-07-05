@@ -25,28 +25,33 @@ namespace Afonsoft.Amadeus
         /// <summary>
         /// The API version.
         /// </summary>
-        public const string VERSION = "2.1.0";
+        public const string VERSION = "2.1.1";
+
+        private readonly ReferenceData referenceData;
+        private readonly Travel travel;
+        private readonly Shopping shopping;
 
         /// <summary>
         /// <para>
         /// A namespaced client for the <code>/v2/reference-data</code> endpoints.
         /// </para>
         /// </summary>
-        public ReferenceData referenceData;
+        public ReferenceData ReferenceData { get { return referenceData; } }
+        
 
         /// <summary>
         /// <para>
         /// A namespaced client for the <code>/v1/travel</code> endpoints.
         /// </para>
         /// </summary>
-        public Travel travel;
+        public Travel Travel { get { return travel; } }
 
         /// <summary>
         /// <para>
         /// A namespaced client for the <code>/v1/shopping</code> endpoints.
         /// </para>
         /// </summary>
-        public Shopping shopping;
+        public Shopping Shopping { get { return shopping; } }
 
         protected internal Amadeus(Configuration configuration) : base(configuration)
         {
@@ -82,13 +87,13 @@ namespace Afonsoft.Amadeus
         /// </summary>
         /// <param name="environment"> The system environment </param>
         /// <returns> a Configuration object </returns>
-        public static Configuration builder(IDictionary<string, string> environment)
+        public static Configuration Builder(IDictionary<string, string> environment)
         {
             string clientId = environment["AMADEUS_CLIENT_ID"];
             string clientSecret = environment["AMADEUS_CLIENT_ID"];
 
             Configuration configuration = Amadeus.Builder(clientId, clientSecret);
-            configuration.parseEnvironment(environment);
+            configuration.ParseEnvironment(environment);
 
             return configuration;
         }

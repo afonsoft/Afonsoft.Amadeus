@@ -51,13 +51,13 @@ namespace Afonsoft.Amadeus
         }
 
         // Tries to parse the raw response from the request.
-        protected internal virtual void parse(HTTPClient client)
+        protected internal virtual void Parse(HTTPClient client)
         {
-            parseData(client);
+            ParseData(client);
         }
 
         // Detects of any exceptions have occured and throws the appropriate exceptions.
-        protected internal virtual void detectError(HTTPClient client)
+        protected internal virtual void DetectError(HTTPClient client)
         {
             ResponseException exception = null;
             string reason = string.Format("{0} {1}", StatusCode, ReasonPhrase);
@@ -84,14 +84,14 @@ namespace Afonsoft.Amadeus
 
             if (exception != null)
             {
-                exception.log(client.Configuration, this);
+                exception.Log(client.Configuration, this);
                 throw exception;
             }
         }
 
         // Tries to parse the status code. Catches any exceptions and defaults to
         // status 0 if an error occurred.
-        private void parseStatusCode(int statusCode)
+        private void ParseStatusCode(int statusCode)
         {
             try
             {
@@ -104,11 +104,11 @@ namespace Afonsoft.Amadeus
         }
 
         // Tries to parse the data
-        private void parseData(HTTPClient client)
+        private void ParseData(HTTPClient client)
         {
             this.Parsed = false;
-            this.Body = readBody(client);
-            this.Result = parseJson(client);
+            this.Body = ReadBody(client);
+            this.Result = ParseJson(client);
             this.Parsed = this.Result != null;
             this.Data = null;
             if (Parsed && Result.ContainsKey("data"))
@@ -125,7 +125,7 @@ namespace Afonsoft.Amadeus
         }
 
         // Tries to read the body.
-        private string readBody(HTTPClient client)
+        private string ReadBody(HTTPClient client)
         {
             // Get the connection
             HttpClient connection = Request.Connection;
@@ -135,26 +135,26 @@ namespace Afonsoft.Amadeus
                 Task<HttpResponseMessage> response = connection.SendAsync(client.HttpRequestMessage);
                 if (response.Result.IsSuccessStatusCode)
                 {
-                    parseStatusCode((int)response.Result.StatusCode);
+                    ParseStatusCode((int)response.Result.StatusCode);
                     return JsonConvert.DeserializeObject(response.Result.Content.ReadAsStringAsync().Result).ToString();
                 }
                 else
                 {
-                    parseStatusCode((int)response.Result.StatusCode);
+                    ParseStatusCode((int)response.Result.StatusCode);
                     ReasonPhrase = response.Result.ReasonPhrase;
                     return JsonConvert.DeserializeObject(response.Result.Content.ReadAsStringAsync().Result).ToString();
                 }
             }
             catch (Exception ex)
             {
-                parseStatusCode(500);
+                ParseStatusCode(500);
                 throw new ServerException(this, ex);
             }
 
         }
 
         // Ties to parse the response body into a JSON Object
-        private JObject parseJson(HTTPClient client)
+        private JObject ParseJson(HTTPClient client)
         {
             if (Json)
             {
@@ -168,12 +168,12 @@ namespace Afonsoft.Amadeus
         {
             get
             {
-                return hasJsonHeader() && hasBody();
+                return HasJsonHeader() && HasBody();
             }
         }
 
         // Checks if the response headers include a JSON mime-type.
-        private bool hasJsonHeader()
+        private bool HasJsonHeader()
         {
             //string contentType = Request.Connection.. [Constants.CONTENT_TYPE];
             //string[] expectedContentTypes = new string[] { "application/json", "application/vnd.amadeus+json" };
@@ -182,7 +182,7 @@ namespace Afonsoft.Amadeus
         }
 
         // Checks if the response has a body
-        private bool hasBody()
+        private bool HasBody()
         {
             return !(Body == null || string.IsNullOrEmpty(Body));
         }

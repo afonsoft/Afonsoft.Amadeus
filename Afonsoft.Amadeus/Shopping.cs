@@ -28,7 +28,7 @@ namespace Afonsoft.Amadeus
         ///   <code>/v1/shopping/flight-dates</code> endpoints.
         /// </para>
         /// </summary>
-        public FlightDates FlightDates;
+        public FlightDates FlightDates { get; private set; }
 
         /// <summary>
         /// <para>
@@ -36,7 +36,7 @@ namespace Afonsoft.Amadeus
         ///   <code>/v1/shopping/flight-destinations</code> endpoints.
         /// </para>
         /// </summary>
-        public FlightDestinations FlightDestinations;
+        public FlightDestinations FlightDestinations { get; private set; }
 
         /// <summary>
         /// <para>
@@ -44,7 +44,7 @@ namespace Afonsoft.Amadeus
         ///   <code>/v1/shopping/flight-offers</code> endpoints.
         /// </para>
         /// </summary>
-        public FlightOffers FlightOffers;
+        public FlightOffers FlightOffers { get; private set; }
 
         /// <summary>
         /// <para>
@@ -52,7 +52,7 @@ namespace Afonsoft.Amadeus
         ///   <code>/v2/shopping/hotel-offers</code> endpoints.
         /// </para>
         /// </summary>
-        public HotelOffers HotelOffers;
+        public HotelOffers HotelOffers { get; private set; }
 
         /// <summary>
         /// <para>
@@ -60,7 +60,7 @@ namespace Afonsoft.Amadeus
         ///   <code>/v2/shopping/hotel-offers/by-hotel</code> endpoints.
         /// </para>
         /// </summary>
-        public HotelOffersByHotel HotelOffersByHotel;
+        public HotelOffersByHotel HotelOffersByHotel { get; private set; }
 
         /// <summary>
         /// Constructor.

@@ -19,7 +19,7 @@ namespace Afonsoft.Amadeus.referenceData.locations
     /// </summary>
     public class Airports
     {
-        private Amadeus client;
+        private readonly Amadeus client;
 
         /// <summary>
         /// Constructor.

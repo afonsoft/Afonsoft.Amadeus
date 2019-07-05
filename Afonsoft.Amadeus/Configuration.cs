@@ -24,7 +24,7 @@ namespace Afonsoft.Amadeus
     /// </summary>
     public class Configuration
     {
-        private static readonly Params HOSTS = Params.with("production", "api.amadeus.com").and("test", "test.api.amadeus.com");
+        private static readonly Params HOSTS = Params.With("production", "api.amadeus.com").And("test", "test.api.amadeus.com");
 
         /// <summary>
         /// The client ID used to authenticate the API calls.
@@ -55,26 +55,26 @@ namespace Afonsoft.Amadeus
         /// </summary>
         /// <param name="hostname"> The name of the server API calls are made to </param>
         /// <returns> The name of the server API calls are made to </returns>
-        public string Hostname { get; set; } = "test";
+        public string Hostname { get; private set; } = "test";
         /// <summary>
         /// The optional custom host domain to use for API calls. Defaults to internal value for
         /// 'hostname'.
         /// </summary>
         /// <param name="host"> The optional custom host domain to use for API calls. </param>
         /// <returns> The optional custom host domain to use for API calls. </returns>
-        public string Host { get; set; } = "test.api.amadeus.com";
+        public string Host { get; private set; } = "test.api.amadeus.com";
         /// <summary>
         /// Wether to use SSL. Defaults to True
         /// </summary>
         /// <param name="ssl"> A boolean specifying if the connection should use SSL </param>
         /// <returns> A boolean specifying if the connection should use SSL </returns>
-        public bool Ssl { get; set; } = true;
+        public bool Ssl { get; private set; } = true;
         /// <summary>
         /// The port to use. Defaults to 443 for an SSL connection, and 80 for a non SSL connection.
         /// </summary>
         /// <param name="port"> The port to use for the connection </param>
         /// <returns> The port to use for the connection </returns>
-        public int Port { get; set; } = 443;
+        public int Port { get; private set; } = 443;
         /// <summary>
         /// An optional custom App ID to be passed in the User Agent to the server (Defaults to null).
         /// </summary>
@@ -99,7 +99,7 @@ namespace Afonsoft.Amadeus
         /// </summary>
         /// <returns> an Amadeus client </returns>
         /// <exception cref="NullPointerException"> when a client ID or client secret is missing </exception>
-        public virtual Amadeus build()
+        public virtual Amadeus Build()
         {
             return new Amadeus(this);
         }
@@ -109,7 +109,7 @@ namespace Afonsoft.Amadeus
         /// </summary>
         /// <param name="hostname"> The name of the server API calls are made to </param>
         /// <returns> The name of the server API calls are made to </returns>
-        public virtual Configuration setHostname(string hostname)
+        public virtual Configuration SetHostname(string hostname)
         {
             if (!HOSTS.ContainsKey(hostname))
             {
@@ -125,7 +125,7 @@ namespace Afonsoft.Amadeus
         /// </summary>
         /// <param name="ssl"> A boolean specifying if the connection should use SSL </param>
         /// <returns> A boolean specifying if the connection should use SSL </returns>
-        public virtual Configuration setSsl(bool ssl)
+        public virtual Configuration SetSsl(bool ssl)
         {
             this.Ssl = ssl;
             if (!ssl && Port == 443)
@@ -136,20 +136,20 @@ namespace Afonsoft.Amadeus
         }
 
         // Parses environment variables and initializes the values.
-        protected internal virtual Configuration parseEnvironment(IDictionary<string, string> environment)
+        protected internal virtual Configuration ParseEnvironment(IDictionary<string, string> environment)
         {
-            Hostname = getOrDefault(environment, "HOSTNAME", Hostname);
-            Host = getOrDefault(environment, "HOST", Host);
+            Hostname = GetOrDefault(environment, "HOSTNAME", Hostname);
+            Host = GetOrDefault(environment, "HOST", Host);
             LogLevel = LogLevel.None;
-            Ssl = bool.Parse(getOrDefault(environment, "SSL", Ssl.ToString()));
-            Port = int.Parse(getOrDefault(environment, "PORT", Port.ToString()));
-            CustomAppId = getOrDefault(environment, "CUSTOM_APP_ID", CustomAppId);
-            CustomAppVersion = getOrDefault(environment, "CUSTOM_APP_VERSION", CustomAppVersion);
+            Ssl = bool.Parse(GetOrDefault(environment, "SSL", Ssl.ToString()));
+            Port = int.Parse(GetOrDefault(environment, "PORT", Port.ToString()));
+            CustomAppId = GetOrDefault(environment, "CUSTOM_APP_ID", CustomAppId);
+            CustomAppVersion = GetOrDefault(environment, "CUSTOM_APP_VERSION", CustomAppVersion);
             return this;
         }
 
         // Helper method for Java 7, as it's missing the getOrDefault method for Maps
-        private string getOrDefault(IDictionary<string, string> environment, string key, string defaultValue)
+        private string GetOrDefault(IDictionary<string, string> environment, string key, string defaultValue)
         {
             string value = environment[string.Format("AMADEUS_{0}", key)];
             return (string.ReferenceEquals(value, null)) ? defaultValue : value;

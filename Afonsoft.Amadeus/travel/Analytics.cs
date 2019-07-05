@@ -25,7 +25,7 @@
 	  ///   <code>/v1/travel/analytics/air-traffics</code> endpoints.
 	  /// </para>
 	  /// </summary>
-	  public AirTraffic airTraffic;
+	  public AirTraffic AirTraffic { get; private set; }
 
 
 	  /// <summary>
@@ -34,7 +34,7 @@
 	  /// </summary>
 	  public Analytics(Amadeus client)
 	  {
-		this.airTraffic = new AirTraffic(client);
+		this.AirTraffic = new AirTraffic(client);
 	  }
 	}
 

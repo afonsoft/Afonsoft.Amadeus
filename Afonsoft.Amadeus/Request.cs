@@ -16,63 +16,63 @@ namespace Afonsoft.Amadeus
         /// <summary>
         /// The HTTPClient verb to use for API calls.
         /// </summary>
-        public string Verb;
+        public string Verb { get; private set; }
         /// <summary>
         /// The scheme to use for API calls.
         /// </summary>
-        public string Scheme;
+        public string Scheme { get; private set; }
         /// <summary>
         /// The host domain to use for API calls.
         /// </summary>
-        public string Host;
+        public string Host { get; private set; }
         /// <summary>
         /// The path use for API calls.
         /// </summary>
-        public string Path;
+        public string Path { get; private set; }
         /// <summary>
         /// The params to send to the API endpoint.
         /// </summary>
-        public Params @Params;
+        public Params @Params { get; private set; }
         /// <summary>
         /// The bearer token used to authenticate the API call.
         /// </summary>
-        public string BearerToken;
+        public string BearerToken { get; private set; }
         /// <summary>
         /// The version of the SDK used.
         /// </summary>
-        public string ClientVersion;
+        public string ClientVersion { get; private set; }
         /// <summary>
         /// The version of Java used.
         /// </summary>
-        public string LanguageVersion;
+        public string LanguageVersion { get; private set; }
         /// <summary>
         /// The custom Application ID passed in the user agent.
         /// </summary>
-        public string AppId;
+        public string AppId { get; private set; }
         /// <summary>
         /// The custom Application Version passed in the user agent.
         /// </summary>
-        public string AppVersion;
+        public string AppVersion { get; private set; }
         /// <summary>
         /// Whether this connection uses SSL.
         /// </summary>
-        public bool Ssl;
+        public bool Ssl { get; private set; }
         /// <summary>
         /// The port to use for this request.
         /// </summary>
-        public int Port;
+        public int Port { get; private set; }
         /// <summary>
         /// The Headers for this request.
         /// </summary>
-        public Dictionary<string, string> Headers;
+        public Dictionary<string, string> Headers { get; private set; }
         /// <summary>
         /// The full URI for this request, based on the
         /// verb, port, path, host, etc.
         /// </summary>
-        public string Uri;
+        public string Uri { get; private set; }
         // The connection used to make the API call.
 
-        public HttpClient Connection { get; set; }
+        public HttpClient Connection { get; private set; }
 
         protected internal Request(string verb, string path, Params @params, string bearerToken, HTTPClient client)
         {
@@ -90,13 +90,13 @@ namespace Afonsoft.Amadeus
             this.Port = config.Port;
             this.Ssl = config.Ssl;
 
-            determineScheme();
-            prepareUrl();
-            prepareHeaders();
+            DetermineScheme();
+            PrepareUrl();
+            PrepareHeaders();
         }
 
         // Builds a HttpURLConnection using all the data for this request.
-        protected internal virtual void establishConnection()
+        protected internal virtual void EstablishConnection()
         {
             this.Connection = new HttpClient();
             this.Connection.BaseAddress = new Uri(Uri);
@@ -108,13 +108,13 @@ namespace Afonsoft.Amadeus
         }
 
         // Determines the scheme based on the SSL value
-        private void determineScheme()
+        private void DetermineScheme()
         {
             this.Scheme = Ssl ? Constants.HTTPS : Constants.HTTP;
         }
 
         // Prepares the full URL based on the scheme, host, port and path.
-        private void prepareUrl()
+        private void PrepareUrl()
         {
             this.Uri = string.Format("{0}://{1}:{2}{3}?{4}", Scheme, Host, Port, Path, QueryParams);
         }
@@ -123,10 +123,10 @@ namespace Afonsoft.Amadeus
             return this.Uri;
         }
         // Prepares the Headers to be sent in the request
-        private void prepareHeaders()
+        private void PrepareHeaders()
         {
             this.Headers = new Dictionary<string, string>();
-            Headers.Add(Constants.USER_AGENT, buildUserAgent());
+            Headers.Add(Constants.USER_AGENT, BuildUserAgent());
             Headers.Add(Constants.ACCEPT, "application/json, application/vnd.amadeus+json, application/x-www-form-urlencoded, multipart/form-data");
             if (BearerToken != null)
             {
@@ -136,7 +136,7 @@ namespace Afonsoft.Amadeus
 
         // Determines the User-Agent header, based on the client version, language version, and custom
         // app information.
-        private string buildUserAgent()
+        private string BuildUserAgent()
         {
             string userAgent = string.Format("amadeus-csharp/{0}", ClientVersion);
             userAgent = userAgent + string.Format(" charp/{0}", LanguageVersion);

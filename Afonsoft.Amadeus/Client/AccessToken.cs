@@ -37,7 +37,7 @@ namespace Afonsoft.Amadeus.Client
             {
                 get
                 {
-                    lazyUpdateAccessToken();
+                    LazyUpdateAccessToken();
                     return string.Format("Bearer {0}", accessToken);
                 }
             }
@@ -46,25 +46,25 @@ namespace Afonsoft.Amadeus.Client
             // or has expired.
             
             //private void lazyUpdateAccessToken() throws com.amadeus.exceptions.ResponseException
-            private void lazyUpdateAccessToken()
+            private void LazyUpdateAccessToken()
             {
-                if (needsRefresh())
+                if (NeedsRefresh())
                 {
-                    updateAccessToken();
+                    UpdateAccessToken();
                 }
             }
 
             // Fetches the access token and then parses the resuling values.
             
             //private void updateAccessToken() throws com.amadeus.exceptions.ResponseException
-            private void updateAccessToken()
+            private void UpdateAccessToken()
             {
-                Response response = fetchAccessToken();
-                storeAccessToken(response.Result);
+                Response response = FetchAccessToken();
+                StoreAccessToken(response.Result);
             }
 
             // Checks if this access token needs a refresh.
-            private bool needsRefresh()
+            private bool NeedsRefresh()
             {
                 bool isNull = string.ReferenceEquals(accessToken, null);
                 bool expired = (DateTimeHelper.CurrentUnixTimeMillis() + TOKEN_BUFFER) > expiresAt;
@@ -74,14 +74,14 @@ namespace Afonsoft.Amadeus.Client
             // Fetches a new Access Token using the credentials from the client
             
             //private com.amadeus.Response fetchAccessToken() throws com.amadeus.exceptions.ResponseException
-            private Response fetchAccessToken()
+            private Response FetchAccessToken()
             {
                 Configuration config = client.Configuration;
-                return client.UnauthenticatedRequest(Constants.POST, Constants.AUTH_URL, Params.with(Constants.GRANT_TYPE, Constants.CLIENT_CREDENTIALS).and(Constants.CLIENT_ID, config.ClientId).and(Constants.CLIENT_SECRET, config.ClientSecret), null);
+                return client.UnauthenticatedRequest(Constants.POST, Constants.AUTH_URL, Params.With(Constants.GRANT_TYPE, Constants.CLIENT_CREDENTIALS).And(Constants.CLIENT_ID, config.ClientId).And(Constants.CLIENT_SECRET, config.ClientSecret), null);
             }
 
             // Store the fetched access token and expiry date
-            private void storeAccessToken(JObject result)
+            private void StoreAccessToken(JObject result)
             {
                 this.accessToken = result[Constants.ACCESS_TOKEN].ToString();
                 int expiresIn = (int)result[Constants.EXPIRES_IN];

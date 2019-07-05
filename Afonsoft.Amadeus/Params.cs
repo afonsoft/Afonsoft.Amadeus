@@ -31,9 +31,9 @@ namespace Afonsoft.Amadeus
         /// <param name="key"> the key for the parameter to send to the API </param>
         /// <param name="value"> the value for the given key </param>
         /// <returns> the Param object, allowing for convenient chaining </returns>
-        public static Params with(string key, object value)
+        public static Params With(string key, object value)
         {
-            return (new Params()).and(key, value);
+            return (new Params()).And(key, value);
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Afonsoft.Amadeus
         /// <param name="key"> the key for the parameter to send to the API </param>
         /// <param name="value"> the value for the given key </param>
         /// <returns> the Param object, allowing for convenient chaining </returns>
-        public virtual Params and(string key, object value)
+        public virtual Params And(string key, object value)
         {
             this[key] = value.ToString();
             return this;

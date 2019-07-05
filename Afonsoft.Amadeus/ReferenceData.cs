@@ -20,7 +20,8 @@ namespace Afonsoft.Amadeus
     /// </summary>
     public class ReferenceData
     {
-        private Amadeus client;
+        private readonly Amadeus client;
+
 
         /// <summary>
         /// <para>
@@ -28,7 +29,7 @@ namespace Afonsoft.Amadeus
         ///   <code>/v2/reference-data/urls</code> endpoints.
         /// </para>
         /// </summary>
-        public Urls urls;
+        public Urls Urls { get; private set; }
 
         /// <summary>
         /// <para>
@@ -36,7 +37,7 @@ namespace Afonsoft.Amadeus
         ///   <code>/v2/reference-data/locations</code> endpoints.
         /// </para>
         /// </summary>
-        public Locations locations;
+        public Locations Locations { get; private set; }
 
         /// <summary>
         /// <para>
@@ -44,7 +45,7 @@ namespace Afonsoft.Amadeus
         ///   <code>/v2/reference-data/airlines</code> endpoints.
         /// </para>
         /// </summary>
-        public Airlines airlines;
+        public Airlines Airlines { get; private set; }
 
 
         /// <summary>
@@ -54,9 +55,9 @@ namespace Afonsoft.Amadeus
         public ReferenceData(Amadeus client)
         {
             this.client = client;
-            this.urls = new Urls(client);
-            this.locations = new Locations(client);
-            this.airlines = new Airlines(client);
+            this.Urls = new Urls(client);
+            this.Locations = new Locations(client);
+            this.Airlines = new Airlines(client);
         }
 
         /// <summary>
@@ -65,7 +66,7 @@ namespace Afonsoft.Amadeus
         ///   <code>/v2/reference-data/location/:hotel_id</code> endpoints.
         /// </para>
         /// </summary>
-        public virtual Location location(string locationId)
+        public virtual Location Location(string locationId)
         {
             return new Location(client, locationId);
         }

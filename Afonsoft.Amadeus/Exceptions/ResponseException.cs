@@ -22,21 +22,21 @@ namespace Afonsoft.Exceptions
         /// <summary>
         /// Constructor.
         /// </summary>
-        public ResponseException(Response response) : base(determineDescription(response))
+        public ResponseException(Response response) : base(DetermineDescription(response))
         {
             this.Response = response;
-            this.Description = determineDescription(response);
-            determineCode();
+            this.Description = DetermineDescription(response);
+            DetermineCode();
         }
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        public ResponseException(Response response, Exception ex) : base(determineDescription(response), ex)
+        public ResponseException(Response response, Exception ex) : base(DetermineDescription(response), ex)
         {
             this.Response = response;
-            this.Description = determineDescription(response) + Environment.NewLine + determineDescription(ex);
-            determineCode();
+            this.Description = DetermineDescription(response) + Environment.NewLine + DetermineDescription(ex);
+            DetermineCode();
         }
 
         /// <summary>
@@ -45,15 +45,15 @@ namespace Afonsoft.Exceptions
         public ResponseException(Exception ex) : base(ex.Message, ex)
         {
             this.Response = null;
-            this.Description = determineDescription(ex);
-            determineCode();
+            this.Description = DetermineDescription(ex);
+            DetermineCode();
         }
 
         /// <summary>
         /// Logs the response.
         /// @hides as only used internally
         /// </summary>
-        public virtual void log(Configuration configuration)
+        public virtual void Log(Configuration configuration)
         {
             if (configuration.LogLevel != LogLevel.None)
             {
@@ -63,7 +63,7 @@ namespace Afonsoft.Exceptions
                     logger.Log(configuration.LogLevel, warning);
             }
         }
-        public virtual void log(Configuration configuration, object @object)
+        public virtual void Log(Configuration configuration, object @object)
         {
             if (configuration.LogLevel != LogLevel.None)
             {
@@ -74,26 +74,26 @@ namespace Afonsoft.Exceptions
             }
         }
 
-        private void determineCode()
+        private void DetermineCode()
         {
             this.Code = this.GetType().Name;
         }
 
-        private static string determineDescription(Response response)
+        private static string DetermineDescription(Response response)
         {
-            StringBuilder description = determineShortDescription(response);
-            description.Append(determineLongDescription(response));
+            StringBuilder description = DetermineShortDescription(response);
+            description.Append(DetermineLongDescription(response));
             return description.ToString();
         }
 
-        private static string determineDescription(Exception ex)
+        private static string DetermineDescription(Exception ex)
         {
-            StringBuilder description = determineShortDescription(ex);
-            description.Append(determineLongDescription(ex));
+            StringBuilder description = DetermineShortDescription(ex);
+            description.Append(DetermineLongDescription(ex));
             return description.ToString();
         }
 
-        private static StringBuilder determineShortDescription(Exception ex)
+        private static StringBuilder DetermineShortDescription(Exception ex)
         {
             StringBuilder message = new StringBuilder();
             if (ex == null)
@@ -107,7 +107,7 @@ namespace Afonsoft.Exceptions
             return message;
         }
 
-        private static StringBuilder determineShortDescription(Response response)
+        private static StringBuilder DetermineShortDescription(Response response)
         {
             StringBuilder message = new StringBuilder();
             if (response == null || response.StatusCode == 0)
@@ -121,24 +121,24 @@ namespace Afonsoft.Exceptions
             return message;
         }
 
-        private static StringBuilder determineLongDescription(Response response)
+        private static StringBuilder DetermineLongDescription(Response response)
         {
             StringBuilder description = new StringBuilder();
             if (response != null && response.Parsed)
             {
                 if (response.Result.ContainsKey("error_description"))
                 {
-                    description.Append(getErrorDescription(response));
+                    description.Append(GetErrorDescription(response));
                 }
                 if (response.Result.ContainsKey("errors"))
                 {
-                    description.Append(getErrorsDescription(response));
+                    description.Append(GetErrorsDescription(response));
                 }
             }
             return description;
         }
 
-        private static StringBuilder determineLongDescription(Exception ex)
+        private static StringBuilder DetermineLongDescription(Exception ex)
         {
             StringBuilder description = new StringBuilder();
             if (ex != null  && ex.InnerException != null)
@@ -146,7 +146,7 @@ namespace Afonsoft.Exceptions
                 Exception tmpEx = ex.InnerException;
                 while (tmpEx != null)
                 {
-                    description.Append(getErrorDescription(tmpEx));
+                    description.Append(GetErrorDescription(tmpEx));
                     tmpEx = tmpEx.InnerException;
                 }
                 
@@ -154,7 +154,7 @@ namespace Afonsoft.Exceptions
             return description;
         }
 
-        private static StringBuilder getErrorDescription(Exception ex)
+        private static StringBuilder GetErrorDescription(Exception ex)
         {
             StringBuilder message = new StringBuilder();
             if (ex != null)
@@ -169,7 +169,7 @@ namespace Afonsoft.Exceptions
             return message;
         }
 
-        private static StringBuilder getErrorDescription(Response response)
+        private static StringBuilder GetErrorDescription(Response response)
         {
             StringBuilder message = new StringBuilder();
             if (response != null)
@@ -184,7 +184,7 @@ namespace Afonsoft.Exceptions
             return message;
         }
 
-        private static StringBuilder getErrorsDescription(Response response)
+        private static StringBuilder GetErrorsDescription(Response response)
         {
             StringBuilder message = new StringBuilder();
             if (response != null)

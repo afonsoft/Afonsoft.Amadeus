@@ -128,7 +128,7 @@ namespace Afonsoft.Amadeus
         public virtual Response UnauthenticatedRequest(string verb, string path, Params @params, string bearerToken)
         {
             Request request = BuildRequest(verb, path, @params, bearerToken);
-            log(request);
+            Log(request);
             return Execute(request);
         }
 
@@ -139,7 +139,7 @@ namespace Afonsoft.Amadeus
         /// <exception cref="ResponseException"> if the page could not be found </exception>
         public virtual Response Previous(Response response)
         {
-            return page(Constants.PREVIOUS, response);
+            return Page(Constants.PREVIOUS, response);
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace Afonsoft.Amadeus
         /// <exception cref="ResponseException"> if the page could not be found </exception>
         public virtual Resource[] Previous(Resource resource)
         {
-            return page(Constants.PREVIOUS, resource);
+            return Page(Constants.PREVIOUS, resource);
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Afonsoft.Amadeus
         /// <exception cref="ResponseException"> if the page could not be found </exception>
         public virtual Response Next(Response response)
         {
-            return page(Constants.NEXT, response);
+            return Page(Constants.NEXT, response);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Afonsoft.Amadeus
         /// <exception cref="ResponseException"> if the page could not be found </exception>
         public virtual Resource[] Next(Resource resource)
         {
-            return page(Constants.NEXT, resource);
+            return Page(Constants.NEXT, resource);
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Afonsoft.Amadeus
         /// <exception cref="ResponseException"> if the page could not be found </exception>
         public virtual Response First(Response response)
         {
-            return page(Constants.FIRST, response);
+            return Page(Constants.FIRST, response);
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Afonsoft.Amadeus
         /// <exception cref="ResponseException"> if the page could not be found </exception>
         public virtual Resource[] First(Resource resource)
         {
-            return page(Constants.FIRST, resource);
+            return Page(Constants.FIRST, resource);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Afonsoft.Amadeus
         /// <exception cref="ResponseException"> if the page could not be found </exception>
         public virtual Response Last(Response response)
         {
-            return page(Constants.LAST, response);
+            return Page(Constants.LAST, response);
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Afonsoft.Amadeus
         /// <exception cref="ResponseException"> if the page could not be found </exception>
         public virtual Resource[] Last(Resource resource)
         {
-            return page(Constants.LAST, resource);
+            return Page(Constants.LAST, resource);
         }
 
         // A generic method for making requests of any verb.
@@ -225,7 +225,7 @@ namespace Afonsoft.Amadeus
         }
 
         // A simple log that only triggers if we are in debug mode
-        private void log(object @object)
+        private void Log(object @object)
         {
             if (Configuration.LogLevel != LogLevel.None)
             {
@@ -242,9 +242,9 @@ namespace Afonsoft.Amadeus
         private Response Execute(Request request)
         {
             Response response = new Response(Fetch(request));
-            response.parse(this);
-            log(response);
-            response.detectError(this);
+            response.Parse(this);
+            Log(response);
+            response.DetectError(this);
             return response;
         }
 
@@ -254,7 +254,7 @@ namespace Afonsoft.Amadeus
         {
             try
             {
-                request.establishConnection();
+                request.EstablishConnection();
                 Write(request);
             }
             catch (IOException ex)
@@ -291,7 +291,7 @@ namespace Afonsoft.Amadeus
         /// </summary>
 
         //protected Response page(String pageName, Response response) throws com.amadeus.exceptions.ResponseException
-        protected internal virtual Response page(string pageName, Response response)
+        protected internal virtual Response Page(string pageName, Response response)
         {
             try
             {
@@ -321,9 +321,9 @@ namespace Afonsoft.Amadeus
         /// </summary>
 
         //protected com.amadeus.resources.Resource[] page(String pageName, com.amadeus.resources.Resource resource) throws com.amadeus.exceptions.ResponseException
-        protected internal virtual Resource[] page(string pageName, Resource resource)
+        protected internal virtual Resource[] Page(string pageName, Resource resource)
         {
-            Response response = page(pageName, resource.Response);
+            Response response = Page(pageName, resource.Response);
             return Resource.FromArray(response, resource.DeSerializationClass);
         }
     }
