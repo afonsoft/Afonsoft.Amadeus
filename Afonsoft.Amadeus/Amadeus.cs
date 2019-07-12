@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 namespace Afonsoft.Amadeus
 {
@@ -75,6 +76,11 @@ namespace Afonsoft.Amadeus
         public static Configuration Builder(string clientId, string clientSecret)
         {
             return new Configuration(clientId, clientSecret);
+        }
+
+        public static Configuration Builder(string clientId, string clientSecret, ILogger logger)
+        {
+            return new Configuration(clientId, clientSecret, logger);
         }
 
         /// <summary>

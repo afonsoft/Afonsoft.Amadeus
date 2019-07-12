@@ -231,10 +231,8 @@ namespace Afonsoft.Amadeus
             {
                 ILogger logger = Configuration.Logger;
 
-                string log = string.Format("{0}:{1}", Configuration.LogLevel, @object.ToString());
-
                 if (logger != null)
-                    logger.Log(Configuration.LogLevel, log, @object);
+                    logger.Log(Configuration.LogLevel, @object.ToString());
             }
         }
 

@@ -9,25 +9,24 @@ namespace AmadeusTest
     {
         static void Main(string[] args)
         {
+            //https://developers.amadeus.com/self-service
+            Console.WriteLine("Test Amadeus!");
+
+            Configuration config = Amadeus.Builder("b5xf3fHrjc9clfQp8euNA59QiOaTn6c8", "o9nVf3UuePnsAs2T", new Afonsoft.Logger.LoggerProvider<Program>().CreateLogger());
             try
             {
-                ILoggerFactory loggerFactory = new LoggerFactory().AddConsole();
-
-                //https://developers.amadeus.com/self-service
-                Console.WriteLine("Test Amadeus!");
-                Configuration config = Amadeus.Builder("b5xf3fHrjc9clfQp8euNA59QiOaTn6c8", "o9nVf3UuePnsAs2T");
+                
                 config.SetHostname("test");
                 config.CustomAppId = "AFONSOFT";
                 config.CustomAppVersion = "V1";
 
-                config.Logger = loggerFactory.CreateLogger<Program>();
-                config.LogLevel = LogLevel.Debug;
+                config.LogLevel = LogLevel.Information;
 
                 Amadeus amadeus = config.Build();
 
                 if (amadeus != null)
                 {
-
+                    config.Logger.LogInformation("Airlines#Get");
                     var airlines = amadeus.ReferenceData.Airlines.Get(Params.With("airlineCodes", "G3"));
 
                     if (airlines != null)
@@ -35,6 +34,7 @@ namespace AmadeusTest
 
                         //https://test.api.amadeus.com/v1/shopping/flight-offers?origin=NYC&destination=MAD&departureDate=2019-07-25&returnDate=2019-07-31&adults=1&nonStop=false&currency=BRL&max=200
 
+                        config.Logger.LogInformation("FlightOffers#Get");
                         var flightOffers = amadeus.Shopping.FlightOffers.Get(Params
                                                                 .With("origin", "NYC")
                                                                 .And("destination", "MAD")
@@ -50,6 +50,7 @@ namespace AmadeusTest
                         if (flightOffers != null)
                         {
 
+                            config.Logger.LogInformation("ReferenceData#Urls#CheckinLinks#Get");
                             var checkin = amadeus.ReferenceData.Urls.CheckinLinks.Get(Params.With("airlineCode", "G3").And("language", "pt"));
 
                             if (checkin != null)
@@ -62,7 +63,7 @@ namespace AmadeusTest
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+               Console.WriteLine(ex.Message);
             }
         }
     }

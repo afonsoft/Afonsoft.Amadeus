@@ -49,7 +49,7 @@ namespace Afonsoft.Amadeus
         /// </summary>
         /// <param name="logLevel"> The log level for the logger </param>
         /// <returns> The log level for the logger </returns>
-        public LogLevel LogLevel { get; set; } = LogLevel.None;
+        public LogLevel LogLevel { get; set; } = LogLevel.Information;
         /// <summary>
         /// The the name of the server API calls are made to, 'production' or 'test'. Defaults to 'test'
         /// </summary>
@@ -92,6 +92,13 @@ namespace Afonsoft.Amadeus
         {
             this.ClientId = clientId;
             this.ClientSecret = clientSecret;
+        }
+
+        protected internal Configuration(string clientId, string clientSecret, ILogger logger)
+        {
+            this.ClientId = clientId;
+            this.ClientSecret = clientSecret;
+            this.Logger = logger;
         }
 
         /// <summary>
