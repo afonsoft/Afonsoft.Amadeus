@@ -12,7 +12,7 @@ namespace AmadeusTest
             //https://developers.amadeus.com/self-service
             Console.WriteLine("Test Amadeus!");
 
-            Configuration config = Amadeus.Builder("b5xf3fHrjc9clfQp8euNA59QiOaTn6c8", "o9nVf3UuePnsAs2T", new Afonsoft.Logger.LoggerProvider<Program>().CreateLogger());
+            Configuration config = Amadeus.Builder("REPLACE_BY_YOUR_API_KEY", "REPLACE_BY_YOUR_API_SECRET", new Afonsoft.Logger.AfonsoftLoggerProvider<Program>().CreateLogger());
             try
             {
                 
